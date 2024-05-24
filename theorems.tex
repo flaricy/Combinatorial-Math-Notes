@@ -8,7 +8,7 @@
 %   Claim:          \clm
 %   Fact:           \fact
 %   Proof:          \pf
-%   Example:        \ex
+%   Example:        \eg
 %   Remark:         \rmk (sentence), \rmkb (block)
 % Suffix
 %   r:              Allow Theorem/Definition to be referenced, e.g. thmr
@@ -160,7 +160,7 @@
     fonttitle=\bfseries\large,
     coltitle=black,
     colbacktitle=yellow!30!white,
-    colback=yellow!20!white,
+    % colback=yellow!20!white,
 }{prop}
 
 \NewDocumentCommand{\prop}{+m}{
@@ -169,6 +169,30 @@
     \end{myproposition}
 }
 
+% Exercise
+\newtcbtheorem[use counter from=mydefinition]{myexercise}{Exercise}
+{
+    enhanced,
+    % frame hidden,
+    titlerule=0mm,
+    toptitle=1mm,
+    bottomtitle=1mm,
+    fonttitle=\bfseries\large,
+    coltitle=black,
+    colbacktitle=blue!30!white,
+    colback=white % yellow!20!white,
+    % colbacktitle=blue,  % 将标题背景改为蓝色
+    % colback=white,  % 将背景改为无色
+    %colframe=lightblue,  % 添加淡蓝色边框
+}{ex}
+
+\NewDocumentCommand{\ex}{+m}{
+    \begin{myexercise}{}{}
+        #1
+    \end{myexercise}
+}
+
+% proof
 \newenvironment{proppf}{
 	{\noindent{\it \textbf{Proof for Proposition.}}}
 	\tcolorbox[blanker,breakable,left=5mm,parbox=false,
@@ -201,7 +225,7 @@
     fonttitle=\bfseries\large,
     coltitle=black,
     colbacktitle=pink!30!white,
-    colback=pink!20!white,
+    %colback=pink!20!white,
 }{clm}
 
 
@@ -243,7 +267,7 @@
     fonttitle=\bfseries\large,
     coltitle=black,
     colbacktitle=purple!20!white,
-    colback=purple!10!white,
+    %colback=purple!10!white,
 }{fact}
 
 \NewDocumentCommand{\fact}{+m}{
@@ -259,6 +283,7 @@
         [\noindent\textbf{Proof.}]
         #1
     \end{proof}
+    \vspace{\baselineskip}
 }
 
 % Example
@@ -277,7 +302,7 @@
     \vspace{5pt}
 }
 
-\NewDocumentCommand{\ex}{+m}{
+\NewDocumentCommand{\eg}{+m}{
     \begin{example}
         #1
     \end{example}

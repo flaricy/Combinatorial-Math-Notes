@@ -16,6 +16,8 @@
 \tcbuselibrary{theorems,skins,breakable}
 \usepackage[UTF8]{ctex}
 
+\usepackage{quiver} % to draw commutative diagrams
+
 \setstretch{1.2}
 \geometry{
     textheight=9in,
@@ -97,7 +99,7 @@
     Laboris labore magna dolore eiusmod ea ex et eiusmod laboris. Et aliquip cupidatat reprehenderit id officia pariatur. 
 }
 
-\ex{
+\eg{
     Nostrud esse occaecat Lorem dolore laborum exercitation adipisicing eu sint sunt et. Excepteur voluptate consectetur qui ex amet esse sunt ut nostrud qui proident non. Ipsum nostrud ut elit dolor. Incididunt voluptate esse et est labore cillum proident duis.
 }
 
@@ -116,6 +118,126 @@
     \includegraphics[scale=0.1]{img/loo.jpg}
     \caption{Waterloo, ON}
 \end{figure}
+
+
+\chapter{组合存在性定理}
+
+\section{有限偏序集的分解定理（Dilworth's Theorem）}
+
+{\it to be written}
+
+\section{Pigeonhole Principle}
+\ex{
+    从1到2n的正整数中，任取n+1个数，至少有一对数，其中一个数是另一个数的倍数。
+}
+
+\pf{
+    考虑将每个数分解成 $a_i = 2^{b_i}r_i, i = 1,2,...,n+1$. 由于 $1~2n$
+    中仅有 $n$ 个数，所以存在 $i<j, r_i = j_j$, 则必有 $a_i | a_j$ 或者 $a_j | a_i$.
+}
+
+\ex{
+    任意 m 个有序的数中存在连续若干个的和是 m 的倍数。
+}
+\pf{
+    考虑前缀和 mod m 的余数即可。
+}
+
+\ex{
+    $a_1,...,a_{n^2+1}$ 是实数序列，证明：可以选出 $n+1$ 个元素的子序列使得单调增或者单调减。
+}
+
+
+\pf{
+    假设选不出长度为 $n+1$ 的单调序列。令 $m_i$ 表示以$a_i$ 为第一个元素的单调{\bf 增}子序列的最长的长度，则 $m_i \le n$. 
+    由抽屉原理，存在 $n+1$ 个下标 $i_1,...,i_{n+1}$ 使得 $m_{i_1}=...=m_{i_{n+1}}$.
+    如果存在 $1\le s<t\le n+1$, 使得 $a_{i_s} \le a_{i_t}$，则以 $a_{i_s}$ 开头的单调序列可以更长。矛盾。
+
+    因此 $a_{i_1} > a_{i_2} > ... > a_{i_{n+1}}$, 我们得到长度为 $n+1$ 的严格递减序列。
+}
+\section{Ramsey's Theorem}
+
+一种简单形式，
+\prop{红蓝染色$K_9$的边,证明存在红色的$K_4$或蓝色的$K_3$。By convention, $K_n$ is the complete graph of order $n$.}
+\begin{proof}
+    Claim: 存在一个节点关联至少4条蓝边或者6条红边。
+
+    若否，则图中红边数量不超过 $[\frac{5 \times 9}{2}] = 22$, 蓝边数量不超过 $[\frac{3\times 9}{2}] = 13$, 但是 $K_9$ 有 $C_9^2 = 36$ 条边。矛盾。
+
+    如果 $v_1$ 关联了4条蓝色边，
+    \[\begin{tikzcd}
+        && {v_1} \\
+        \bullet &&&& \bullet \\
+        & \bullet && \bullet
+        \arrow[color={rgb,255:red,92;green,92;blue,214}, no head, from=1-3, to=2-1]
+        \arrow[color={rgb,255:red,92;green,92;blue,214}, no head, from=1-3, to=2-5]
+        \arrow[color={rgb,255:red,92;green,92;blue,214}, no head, from=1-3, to=3-2]
+        \arrow[color={rgb,255:red,92;green,92;blue,214}, no head, from=1-3, to=3-4]
+    \end{tikzcd}\]
+
+    如果上图中4个点之间存在蓝色边，则出现蓝色$K_3$. 若都是红色边，则出现红色$K_4$.
+
+    如果 $v_1$ 关联了6条红色边,考虑这6个点之间的染色，
+    \[\begin{tikzcd}
+        \bullet && {v_1} && \bullet \\
+        \bullet &&&& \bullet \\
+        & \bullet && \bullet
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-1, to=1-3]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=1-5]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=2-1]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=2-5]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=3-2]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=3-4]
+    \end{tikzcd}\]
+    
+    由于2-染色$K_6$必定出现红色或蓝色$K_3$. 如果出现蓝色$K_3$，已经证毕。如果出现红色$K_3$,则和$v_1$组成红色$K_4$.
+\end{proof}
+
+\prop{$K_8$不满足上个命题的性质}
+\begin{proof}
+    \[\begin{tikzcd}
+        & \bullet & \bullet \\
+        \bullet &&& \bullet \\
+        \bullet &&& \bullet \\
+        & \bullet & \bullet
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-2, to=1-3]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-2, to=2-1]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-2, to=2-4]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-2, to=3-1]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=2-4]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=1-3, to=3-4]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=2-1, to=1-3]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=2-1, to=3-1]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=2-1, to=4-2]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=2-4, to=3-4]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=2-4, to=4-3]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=3-1, to=4-2]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=3-4, to=4-2]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=4-2, to=4-3]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=4-3, to=3-1]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, no head, from=4-3, to=3-4]
+    \end{tikzcd}\]
+    除这些红色边外，其他都连蓝色边。可以验证，图中不存在蓝色三角形$K_3$,不存在红色$K_4$.
+\end{proof}
+
+上面两个命题说明9是满足此性质的最小数，$R(3,4) = 9$.
+
+\thmr{Ramsey}{Ramsey}{
+    设 $p, q$为正整数，$p, q \ge2$，则存在最小正整数$R(p, q)$，使得当$n \ge R(p, q)$时，用红蓝两色涂色$K_n$ 的
+边，则或存在一个蓝色的$K_p$，或存在一个红色的 $K_q$.
+
+}
+\begin{proof}
+    归纳法。不难看出 $R(p,2) = p, R(2, q) = q$.
+    假设 $R(p, q-1), R(p-1,q)$ 存在，我们证明
+    \[R(p,q) \le R(p,q-1) + R(p-1, q)\]
+    考虑 $n = R(p,q-1) + R(p-1, q)$ 个点的图染色。任取点$v$,则或者$v$于$R(p-1,q)$个点连蓝色边，或者和$R(p,q-1)$个点连红色边（why？）。
+    
+    如果$v$与$R(p-1,q)$个点连蓝色边。由归纳假设，这$R(p-1,q)$个点中必存在蓝色$K_{p-1}$或红色$K_q$.若为红色$K_q$，已经结束。若为蓝色$K_{p-1}$，则和$v$组成蓝色$K_p$.
+
+    $v$与$R(p,q-1)$个点连红色边的情况同理。
+\end{proof}
+
 
 % \end{CJK}
 \end{document}
