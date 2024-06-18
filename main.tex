@@ -671,6 +671,180 @@ Ramsey's Theorem 可以用集合的语言表述，进行推广。
     
 \end{proof}
 
+\section{Burnside's Lemma and Polya Enumeration Theorem}
+
+\href{https://zhuanlan.zhihu.com/p/651161435}{参考}
+
+\chapter{组合设计与编码}
+
+\section{拉丁方}
+
+\defn{}{
+    由数字$1,2,...,n$构成的 $n \times n$ 方阵. 每个数字在每行每列恰好出现一次。
+
+    $n$ 称作拉丁方的阶。
+}
+
+\rmk{
+    {\bf 标准型}
+
+    第一行和第一列按照 $1,2,...,n$ 来排。
+}
+
+\defn{正交拉丁方}{
+    设 $A = (a_{ij}), B = (b_{ij})$ 为两个拉丁方，若 $n^2$ 个有序对 $(a_{ij}, b_{ij})$ 两两不等。 则称 $A,B$ 正交。
+
+    类似的，可以定义两两正交的$n$个拉丁方。
+}
+
+\thm{}{
+    设 $L_1,...,L_k$ 为两两正交的 $n$ 阶拉丁方,则 $k \le n-1$.
+}
+
+\section{t设计}
+
+\defn{}{
+    设 $X = \{x_1,x_2,...,x_v\}$ 为点的集合，$B = \{B_1,...,B_b\}$ 为$X$的子集族，称为块的集合。且$|B_i| = k, i = 1,2,...,b$.
+    如果对于任意 $X$ 的 $t$元子集 $T$, 恰有 $\lambda$ 个 $i$ 使得 $T\subseteq B_i$. 则称 $X,B$ 构成一个$v$个点，块大小为$k$,指数为 $\lambda$ 的$t$设计。
+    记为 $t-(v,k,\lambda)$设计。
+}
+
+\ex{
+    {\bf Fano 平面}
+    设 $X = \{0,1,...,6\}$, 定义 $B = \{\{x, x+1, x+ 3\} : x \in X\}$, 加法为mod 7意义下。可以验证，$|B| = 7 = |X|$. 同时，构成 $2-(7,3,1)$ 设计。
+}
+
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=0.6]{img/fano.png}
+    \caption{Fano平面}
+\end{figure}
+
+\rmk{
+    把block看成线。
+    Fano 平面满足，任意两个点恰好在1条线上。每条线恰好有3个点。点的个数 = 线的个数。
+}
+
+\defn{特殊的t设计}{
+    对于 $t-(v,k,\lambda)$ 设计, 设有 $b$ 个block。
+    \begin{itemize}
+        \item $k < v, t = 2$时称为 Balanced Incomplete Bolck Design (BIBD).
+        \item $b = v$时称为{\bf 对称设计}
+        \item $\lambda = 1$时称为 {\bf 斯坦纳系统}
+        \item $\lambda = 1$ 且对称的BIBD称为{\bf 射影平面}。即 $2-(v,k,1)$ 且 $b = v > k$ 的设计。称 $n := k-1$ 为射影平面的阶。
+    \end{itemize}
+}
+
+\rmk{
+    Fano 平面为射影平面。
+}
+
+\prop{
+    Fano平面是唯一的2阶射影平面。
+    即 $2-(v,3,1)$ 在 $b = v > 3$ 的条件下“唯一”。
+}
+\begin{proof}
+    统计 $(\{v_i,v_j\}, B_k)$ 的个数，使得 $\{v_i,v_j\}\in B_k$. 
+    一方面等于 $\binom{v}{2}$; 另一方面等于 $\binom{3}{2}\cdot b = 3v$.
+    从而 $v = 7$.
+
+    如果有两个 $2-(7,3,1)$， 如何证明同构？
+\end{proof}
+
+\thm{}{
+    沿用上面的证明中统计$(\{v_i,v_j\}, B_k)$的方法，得到
+    \[
+        \lambda\binom{v}{t} = b\binom{k}{t}
+    \]
+}
+\rmk{
+    这个定理给出了 $b$ 的计算方法。
+}
+
+\cor{
+    $t = 1$时，得到
+    \[
+        \lambda v = bk
+    \]
+}
+
+\cor{
+    对称的BIBD(t=2)满足
+    \[
+        bk(k-1)=\lambda v(v-1)
+    \]
+}
+
+\cor{
+    设 $D$ 为$n$阶射影平面，则
+    \[v = n^2 + n + 1\]
+}
+\begin{proof}
+    由阶的定义得到 $k = n+1$, 所以为 $2-(v,n+1,1)$ 设计且 $b = v$，因此由推论5.2.7, 
+    \[
+        v\cdot (n+1)n = 1\cdot v(v-1).
+    \]
+\end{proof}
+
+\rmk{
+    Proposition 5.2.4 中，$v$ 的计算可以直接用 $v = 2^2 + 2 + 1 = 7$.
+}
+
+一个 $t-$设计是否包含了$i-$设计，其中$i < t$？
+
+\thm{}{
+    设$X,B$ 构成$t-(v,k,\lambda)$设计，则对于$0\le i\le t$, $X,B$构成$i-(v,k, \lambda_i)$设计。其中:
+    \[
+        \lambda_i = \lambda \frac {\binom{v-i}{t-i}}{\binom{k-i}{t-i}}
+    \]
+}
+\rmk{
+    i = t时，$\lambda_t = \lambda$.
+
+    i = 0时，由推论5.2.6, $\lambda_0 = b$.
+}
+\begin{proof}
+    给定一个 $i$元子集 $U$ ，如何统计在$B$中出现的次数$\lambda_i$?
+
+    统计 $(T, B_i)$ 的个数，其中 $U\subseteq T \subseteq B_i \subseteq X$.
+    一方面等于 $\lambda \cdot \binom{v-i}{t-i}$, 另一方面等于 $\lambda_i \cdot \binom{k-i}{t-i}$.
+
+    注意上述证明过程已经说明了任意$i$元子集出现的次数相同。
+\end{proof}
+
+\cor{
+    设 $X, B$构成$2-(v,k,\lambda)$设计，令 $r = \lambda_1$,
+    
+    (1) $\lambda (v-1) = r(k-1)$ 
+
+    (2) $bk = vr$
+}
+
+\cor{
+    {\bf 斯坦纳3元系统}
+    设 $X,B$ 构成 $2-(v,3,1)$设计，则
+
+    (1) $r = \frac {v-1}2$
+
+    (2) $b = \frac {v(v-1)}6$
+
+    由推论5.2.7
+
+    (3) 由(1)(2)中 $r,b \in \mathbb{N}$得到: $v=3$ or $6n+1$ or $6n+3$  
+    
+}
+\rmk{
+    (3)也是充要条件。
+}
+
+\thm{BIBD存在的必要条件, Fisher不等式}{
+    设 $D$ 为BIBD，则 $b \ge v$
+}
+
+另一个定理，
+\thm{对称的BIBD}{
+    设 $D$ 为对称的BIBD，即 $b = v$。若$v$为偶数，则$k-\lambda$为平方数。
+}
 
 % \end{CJK}
 \end{document}
